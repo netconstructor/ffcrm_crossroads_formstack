@@ -3,7 +3,7 @@
 class VolunteersFormstack
   class << self
     def log(msg)
-      Rails.logger.info msg
+      puts msg
     end
 
     def settings

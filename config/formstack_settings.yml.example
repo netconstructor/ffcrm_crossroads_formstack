@@ -1,0 +1,8 @@
+--- !map:HashWithIndifferentAccess
+formstack:
+  api_key: xxxxxxxxxxxxxxxxxx
+  form_ids:
+    - xxxxxxxxxx
+    - yyyyyyyyyy
+    - zzzzzzzzzz
+

@@ -93,15 +93,19 @@ class VolunteersFormstack
       # Process submissions from each form.
       if @sender = User.find_by_email("volunteer@crossroads.org.hk")
         settings["formstack"]["form_ids"].each do |form_id|
+          log "Fetching new submissions for form: #{form_id} ..."
           # Fetch submissions
           data = client.data(form_id, :per_page => 100)
+          log "Processing #{data.submissions.size} submissions ..."
           data.submissions.each do |submission|
             begin
               submission_as_hash = submission_to_hash(submission, form_id)
               # Log the submission for safe-keeping
               log submission_as_hash.to_s
+
               if process_formstack_submission(submission_as_hash)
-                client.delete(submission.id)
+                log "pretending to delete..."
+              #  client.delete(submission.id)
               end
             rescue Exception => ex
               HoptoadNotifier.notify(ex, :cgi_data => ENV)

@@ -97,7 +97,10 @@ class VolunteersFormstack
           data = client.data(form_id, :per_page => 100)
           data.submissions.each do |submission|
             begin
-              if process_formstack_submission(submission_to_hash(submission, form_id))
+              submission_as_hash = submission_to_hash(submission, form_id)
+              # Log the submission for safe-keeping
+              log submission_as_hash.to_s
+              if process_formstack_submission(submission_as_hash)
                 client.delete(submission.id)
               end
             rescue Exception => ex

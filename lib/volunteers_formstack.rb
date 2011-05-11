@@ -104,8 +104,8 @@ class VolunteersFormstack
               log submission_as_hash.to_s
 
               if process_formstack_submission(submission_as_hash)
-                log "pretending to delete..."
-              #  client.delete(submission.id)
+                log "Deleting submission #{submission.id}..."
+                client.delete(submission.id)
               end
             rescue Exception => ex
               HoptoadNotifier.notify(ex, :cgi_data => ENV)

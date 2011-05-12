@@ -31,6 +31,17 @@ class VolunteersFormstack
       @field_maps ||= YAML.load_file(File.join(File.dirname(__FILE__), "field_maps.yml"))
     end
 
+    def submission_errors
+      @submission_errors ||= (YAML.load_file(File.join(Rails.root, "tmp", "formstack_submission_errors.yml")) || []) rescue []
+    end
+
+    def add_submission_error(id)
+      submission_errors << id
+      File.open(File.join(Rails.root, "tmp", "formstack_submission_errors.yml"), 'w') do |f|
+        f.puts(submission_errors.to_yaml)
+      end
+    end
+
     def field_id_from_name(name, form_id)
       field_maps[form_id][name].to_s
     end
@@ -98,17 +109,21 @@ class VolunteersFormstack
           data = client.data(form_id, :per_page => 100)
           log "Processing #{data.submissions.size} submissions ..."
           data.submissions.each do |submission|
-            begin
-              submission_as_hash = submission_to_hash(submission, form_id)
-              # Log the submission for safe-keeping
-              log submission_as_hash.to_s
-
-              if process_formstack_submission(submission_as_hash)
-                log "Deleting submission #{submission.id}..."
-                client.delete(submission.id)
+            # Don't retry the fail.
+            unless submission_errors.include?(submission.id)
+              begin
+                submission_as_hash = submission_to_hash(submission, form_id)
+                # Log the submission for safe-keeping
+                log submission_as_hash.to_s
+                if process_formstack_submission(submission_as_hash)
+                  log "Deleting submission #{submission.id}..."
+                  client.delete(submission.id)
+                end
+              rescue Exception => ex
+                # Save submission errors so that bad records aren't processed continuously.
+                add_submission_error(submission.id)
+                HoptoadNotifier.notify(ex, :cgi_data => ENV)
               end
-            rescue Exception => ex
-              HoptoadNotifier.notify(ex, :cgi_data => ENV)
             end
           end
         end
@@ -219,11 +234,25 @@ class VolunteersFormstack
     def parse_availability(string)
       return [] if string.blank?
       availability = []
+
+      # Translate chinese.
+      {"星期二" => "tuesday",
+      "星期三" => "wednesday",
+      "星期四" => "thursday",
+      "星期五" => "friday",
+      "星期六" => "saturday",
+      "不适合" => "not available",
+      "全天" => "whole day",
+      "上午" => "morning",
+      "下午" => "afternoon",
+      "不適合" => "not available"}.each {|zh, en| string.gsub!(zh, en)}
+
       days_abbrev = {"tuesday"  => "Tues",
                     "wednesday" => "Wed",
                     "thursday"  => "Thurs",
                     "friday"    => "Fri",
                     "saturday"  => "Sat"}
+
       string.split("\n").each do |row|
         day, avail = *row.strip.split("=").map{|s| s.strip.downcase }
         if abbrev = days_abbrev[day]
@@ -231,19 +260,47 @@ class VolunteersFormstack
           availability << "#{abbrev} Afternoon" if ["afternoon", "whole day"].include?(avail)
         end
       end
-      availability
+
+      # Fallback if parsing fails.
+      if availability.any?
+        return availability
+      else
+        return string
+      end
     end
 
     def parse_languages(string)
       return [] if string.blank?
       languages = []
+
+      # Translate chinese.
+      {"英語" => "English",
+      "廣東話" => "Cantonese",
+      "普通話" => "Mandarin",
+      "法語" => "French",
+      "不會說" => "None",
+      "初等水平" => "Basic",
+      "熟練水平" => "Fluent",
+      "英语" => "English",
+      "广东话" => "Cantonese",
+      "普通话" => "Mandarin",
+      "法语" => "French",
+      "不会说" => "None",
+      "初等水平" => "Basic",
+      "熟练水平" => "Fluent"}.each {|zh, en| string.gsub!(zh, en)}
+
       string.split("\n").each do |row|
         language, fluency = *row.strip.split("=").map{|s| s.strip }
-        languages << "#{language} (#{fluency})" unless fluency == "None"
+        languages << "#{language} (#{fluency})" if %w(Basic Fluent).include?(fluency)
       end
-      languages
-    end
 
+      # Fallback if parsing fails.
+      if languages.any?
+        return languages
+      else
+        return string
+      end
+    end
 
   end
 end

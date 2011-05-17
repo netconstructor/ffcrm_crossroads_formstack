@@ -54,6 +54,35 @@ class VolunteersFormstack
       (id_hash || []).map{|label, fid| "#{label}:  #{submission[fid.to_s]}" }.join("\n")
     end
 
+    def translate_chinese(string)
+      # Translate chinese strings.
+      {"星期二" => "tuesday",
+      "星期三" => "wednesday",
+      "星期四" => "thursday",
+      "星期五" => "friday",
+      "星期六" => "saturday",
+      "不适合" => "not available",
+      "全天" => "whole day",
+      "上午" => "morning",
+      "下午" => "afternoon",
+      "不適合" => "not available",
+      "英語" => "English",
+      "廣東話" => "Cantonese",
+      "普通話" => "Mandarin",
+      "法語" => "French",
+      "不會說" => "None",
+      "初等水平" => "Basic",
+      "熟練水平" => "Fluent",
+      "英语" => "English",
+      "广东话" => "Cantonese",
+      "普通话" => "Mandarin",
+      "法语" => "French",
+      "不会说" => "None",
+      "初等水平" => "Basic",
+      "熟练水平" => "Fluent"}.each {|zh, en| string = string.gsub(zh, en)}
+      string
+    end
+
     # Map the submission to a usable hash.
     def submission_to_hash(s, form_id)
       # Build the field hash from the submission
@@ -81,10 +110,13 @@ class VolunteersFormstack
       data["formstack_email"]["contact"] = contact_params
 
       submission_params = {}
-      %w(skills resume interests languages_spoken
-         availability receive_emails why_would_you_like_to_volunteer
+      %w(skills resume interests receive_emails why_would_you_like_to_volunteer
          how_did_you_hear_about_crossroads).each do |field|
         submission_params[field] = s[field_id_from_name(field, form_id)].to_s
+      end
+      # Some fields need to be translated from chinese:
+      %w(languages_spoken availability).each do |field|
+        submission_params[field] = translate_chinese(s[field_id_from_name(field, form_id)].to_s)
       end
 
       # Interested in doing contains many fields grouped together.
@@ -93,6 +125,11 @@ class VolunteersFormstack
       # Some fields are multiple formstack fields grouped together with labels.
       %w(school_or_company volunteering_type other_information).each do |field|
         submission_params[field] = id_hash_to_s(field_maps[form_id][field], s)
+      end
+
+      # Special case for internship form.
+      if submission_params["other_information"].include?("Internship Period")
+        submission_params["volunteering_type"] = "Internship"
       end
 
       data["formstack_email"]["formstack_submission"] = submission_params
@@ -139,7 +176,7 @@ class VolunteersFormstack
       User.current_user = @sender
 
       contact_params = data["formstack_email"]["contact"]
-      submission = data["formstack_email"]["formstack_submission"]
+      submission_params = data["formstack_email"]["formstack_submission"]
 
       # If contact email address is already taken, create a new contact and add
       # a comment that points back to existing record.
@@ -152,7 +189,7 @@ class VolunteersFormstack
       first_name, *last_name = contact_params.delete("name").split(' ')
       contact_params["first_name"], contact_params["last_name"] = first_name.titleize, last_name.join(' ').titleize
       contact_params["tag_list"] = "Volunteer"
-      contact_params["email_subscriptions"] = ["Volunteer Email"] if !submission["receive_emails"].blank?
+      contact_params["email_subscriptions"] = ["Volunteer Email"] if !submission_params["receive_emails"].blank?
 
       # Set user and default access
       contact_params["user"] = @sender
@@ -188,14 +225,14 @@ class VolunteersFormstack
       # -------------------------------------------------------------------
       vol_tag = contact.tag("Volunteer")
 
-      vol_tag.availability = parse_availability(submission["availability"])
-      vol_tag.languages_spoken = parse_languages(submission["languages_spoken"])
+      vol_tag.availability = parse_availability(submission_params["availability"])
+      vol_tag.languages_spoken = parse_languages(submission_params["languages_spoken"])
 
       %w(school_or_company skills resume interests volunteering_type
          why_would_you_like_to_volunteer how_did_you_hear_about_crossroads
          interested_in_doing other_information).each do |f|
             if vol_tag.respond_to?("#{f}=")
-              vol_tag.send("#{f}=", (submission[f] || "").strip)
+              vol_tag.send("#{f}=", (submission_params[f] || "").strip)
             end
       end
       vol_tag.save!
@@ -235,18 +272,6 @@ class VolunteersFormstack
       return [] if string.blank?
       availability = []
 
-      # Translate chinese.
-      {"星期二" => "tuesday",
-      "星期三" => "wednesday",
-      "星期四" => "thursday",
-      "星期五" => "friday",
-      "星期六" => "saturday",
-      "不适合" => "not available",
-      "全天" => "whole day",
-      "上午" => "morning",
-      "下午" => "afternoon",
-      "不適合" => "not available"}.each {|zh, en| string.gsub!(zh, en)}
-
       days_abbrev = {"tuesday"  => "Tues",
                     "wednesday" => "Wed",
                     "thursday"  => "Thurs",
@@ -272,22 +297,6 @@ class VolunteersFormstack
     def parse_languages(string)
       return [] if string.blank?
       languages = []
-
-      # Translate chinese.
-      {"英語" => "English",
-      "廣東話" => "Cantonese",
-      "普通話" => "Mandarin",
-      "法語" => "French",
-      "不會說" => "None",
-      "初等水平" => "Basic",
-      "熟練水平" => "Fluent",
-      "英语" => "English",
-      "广东话" => "Cantonese",
-      "普通话" => "Mandarin",
-      "法语" => "French",
-      "不会说" => "None",
-      "初等水平" => "Basic",
-      "熟练水平" => "Fluent"}.each {|zh, en| string.gsub!(zh, en)}
 
       string.split("\n").each do |row|
         language, fluency = *row.strip.split("=").map{|s| s.strip }

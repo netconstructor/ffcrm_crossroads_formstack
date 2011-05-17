@@ -42,48 +42,6 @@
     - 10474124
 
 
-# Volunteer at Crossroads - SIMPLIFIED
-# -----------------------------------------------------
-1049957:
-  name: 10893090
-  email: 10893099
-  phone: 10893101
-  mobile: 10893102
-  chinese_name: 10893091
-  salutation: 10893089
-  preferred_name: 10893092
-  where_do_you_live: 10893103
-  street1: 10893104
-  street2: 10893105
-  city: 10893106
-  state: 10893107
-  hk_region: 10893108
-  zipcode: 10893109
-  country: 10893110
-  school_or_company:
-    "School, university, etc.": 10893095
-    "Company": 10893096
-  skills: 10893112
-  resume: 10893113
-  interests: 10893114
-  languages_spoken: 10893115
-  volunteering_type:
-    "Special Programme": 10893122
-    "Time commitment": 10893121
-    "Volunteering with group?": 10893097
-  availability: 10893124
-  receive_emails: 10893100
-  why_would_you_like_to_volunteer: 10893117
-  how_did_you_hear_about_crossroads: 10893118
-  interested_in_doing:
-    - 10893126
-    - 10893127
-    - 10893128
-    - 10893129
-    - 10893130
-    - 10893131
-
-
 # Volunteer at Crossroads - TRADITIONAL
 # -----------------------------------------------------
 1049958:
@@ -124,6 +82,48 @@
     - 10893174
     - 10893175
     - 10893176
+
+
+# Volunteer at Crossroads - SIMPLIFIED
+# -----------------------------------------------------
+1049957:
+  name: 10893090
+  email: 10893099
+  phone: 10893101
+  mobile: 10893102
+  chinese_name: 10893091
+  salutation: 10893089
+  preferred_name: 10893092
+  where_do_you_live: 10893103
+  street1: 10893104
+  street2: 10893105
+  city: 10893106
+  state: 10893107
+  hk_region: 10893108
+  zipcode: 10893109
+  country: 10893110
+  school_or_company:
+    "School, university, etc.": 10893095
+    "Company": 10893096
+  skills: 10893112
+  resume: 10893113
+  interests: 10893114
+  languages_spoken: 10893115
+  volunteering_type:
+    "Special Programme": 10893122
+    "Time commitment": 10893121
+    "Volunteering with group?": 10893097
+  availability: 10893124
+  receive_emails: 10893100
+  why_would_you_like_to_volunteer: 10893117
+  how_did_you_hear_about_crossroads: 10893118
+  interested_in_doing:
+    - 10893126
+    - 10893127
+    - 10893128
+    - 10893129
+    - 10893130
+    - 10893131
 
 
 # Volunteer at Crossroads - INTERNSHIP

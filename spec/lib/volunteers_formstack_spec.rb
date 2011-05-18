@@ -16,5 +16,12 @@ describe VolunteersFormstack do
     end
   end
 
+  it "should raise an error if key fields are blank" do
+    data = {"formstack_email" => {"contact" => {}, "formstack_submission" => {}}}
+    lambda {
+      VolunteersFormstack.process_formstack_submission(data)
+    }.should raise_error(FormstackFieldError, "Field is blank: Availability")
+  end
+
 end
 

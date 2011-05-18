@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+class FormstackFieldError < StandardError; end
+
 class VolunteersFormstack
   class << self
     def log(msg)
@@ -178,6 +180,14 @@ class VolunteersFormstack
       contact_params = data["formstack_email"]["contact"]
       submission_params = data["formstack_email"]["formstack_submission"]
 
+      # Check for a couple of fields that are most likely to fail.
+      # Raise an exception (which notifies hoptoad) if they are blank.
+      if submission_params["availability"].blank?
+        raise FormstackFieldError, "Field is blank: Availability"
+      end
+      if submission_params["languages_spoken"].blank?
+        raise FormstackFieldError, "Field is blank: Languages Spoken"
+      end
       # If contact email address is already taken, create a new contact and add
       # a comment that points back to existing record.
       existing_contact = Contact.find_by_email(contact_params["email"].strip)

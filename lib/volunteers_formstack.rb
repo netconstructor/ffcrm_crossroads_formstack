@@ -189,6 +189,10 @@ class VolunteersFormstack
       first_name, *last_name = contact_params.delete("name").split(' ')
       contact_params["first_name"], contact_params["last_name"] = first_name.titleize, last_name.join(' ').titleize
       contact_params["tag_list"] = "Volunteer"
+      if submission_params["other_information"].include?("Internship Period")
+        contact_params["tag_list"] << ", Intern"
+      end
+
       contact_params["email_subscriptions"] = ["Volunteer Email"] if !submission_params["receive_emails"].blank?
 
       # Set user and default access

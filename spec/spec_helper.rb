@@ -74,8 +74,8 @@ module SampleFormstackSubmissions
           "why_would_you_like_to_volunteer"=>"To give back to the community.\r\nTo gain experience with volunteering outside of school.\r\nTo make people happy and enjoy life.",
           "how_did_you_hear_about_crossroads"=>"friend",
           "interested_in_doing"=>"Happy to try anything*\nTyping*\nPhotocopying, binding etc*\nMailroom*\nCooking*\nCleaning*\nLifting / carrying\nPacking help\nRenovation work\nGardening*\n",
-          "school_or_company"=>"School, university, etc.:  Christian Alliance P.C. Lau Memorial International School\nCompany:  ",
-          "volunteering_type"=>"Special Programme:  silver certificate\nTime commitment:  programme\nVolunteering with group?:  Other: I am volunteering with my friends",
+          "school_or_company"=>"Are you a student?:  I am currently a student\nSchool, university, etc.:  Christian Alliance P.C. Lau Memorial International School\nCompany:  ",
+          "volunteering_type"=>"Special Programme:  silver certificate\nTime commitment:  programme\nVolunteering with group?:  Other: I am volunteering with my friends\nRecord my hours?:  ",
           "other_information"=>""
         }
       }
@@ -141,8 +141,8 @@ module SampleFormstackSubmissions
           "why_would_you_like_to_volunteer"=>"會來幫忙",
           "how_did_you_hear_about_crossroads"=>"internet",
           "interested_in_doing"=>"Happy to try anything*\nReception\nAccounting\nOnline research\nGrant writing\nHardware care/renovation\n\n\n\n",
-          "school_or_company"=>"School, university, etc.:  \nCompany:  僱用企業名稱",
-          "volunteering_type"=>"Special Programme:  \nTime commitment:  occasionally\nVolunteering with group?:  with my school",
+          "school_or_company"=>"Are you a student?:  I am currently employed\nSchool, university, etc.:  \nCompany:  僱用企業名稱",
+          "volunteering_type"=>"Special Programme:  \nTime commitment:  occasionally\nVolunteering with group?:  with my school\nRecord my hours?:  Yes record my hours",
           "other_information"=>""
         }
       }
@@ -212,8 +212,8 @@ module SampleFormstackSubmissions
         "languages_spoken"=>"English = Basic\nCantonese = Fluent\nMandarin = Basic\nFrench = Fluent",
         "availability"=>"tuesday = not available\nwednesday = whole day\nthursday = morning\nfriday = afternoon\nsaturday = morning",
         "interested_in_doing"=>"Happy to try anything*\nHappy to try anything, but no heavy lifting*\nPhotocopying, binding etc*\n\nTruck driving\n\nOptometrist",
-        "school_or_company"=>"School, university, etc.:  \nCompany:  sadgasdgsdag",
-        "volunteering_type"=>"Special Programme:  \nTime commitment:  occasionally\nVolunteering with group?:  with my company",
+        "school_or_company"=>"Are you a student?:  I am currently employed\nSchool, university, etc.:  \nCompany:  sadgasdgsdag",
+        "volunteering_type"=>"Special Programme:  \nTime commitment:  occasionally\nVolunteering with group?:  with my company\nRecord my hours?:  Yes",
         "other_information"=>""
       }
     }}}

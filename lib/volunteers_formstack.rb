@@ -89,6 +89,10 @@ class VolunteersFormstack
     def submission_to_hash(s, form_id)
       # Build the field hash from the submission
       s = s.to_hash
+
+      # Raise an exception if new fields have been added to the form.
+      validate_no_new_fields(s, form_id)
+
       data = {"formstack_email" => {}}
 
       contact_params = {}
@@ -137,6 +141,34 @@ class VolunteersFormstack
       data["formstack_email"]["formstack_submission"] = submission_params
 
       return data
+    end
+
+    # Returns an array of all field ids for the given form
+    def all_form_field_ids(form_id)
+      fields = []
+      field_maps[form_id].each do |name, data|
+        if data.is_a?(Hash)
+          data.each {|k, v| fields << v }
+        elsif data.is_a?(Array)
+          fields += data
+        else
+          fields << data
+        end
+      end
+      return fields.map(&:to_s)
+    end
+
+    # Validation (Checks that no new fields have been added.)
+    # ----------------------------------------------------------------
+    def validate_no_new_fields(s, form_id)
+      all_ids = all_form_field_ids(form_id)
+      s = s.dup
+      s.delete("id")
+      new_fields = s.select{|id, v| !all_ids.include?(id) }
+      unless new_fields.empty?
+        field_errors = new_fields.map{|k,v| "[#{k}: #{v}]"}.join(", ")
+        raise FormstackFieldError, "The following fields have been added to form #{form_id} :: #{field_errors}"
+      end
     end
 
     def process_new_submissions

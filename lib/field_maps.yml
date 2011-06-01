@@ -19,6 +19,7 @@
   zipcode: 10474186
   country: 10474182
   school_or_company:
+    "Are you a student?": 10474090
     "School, university, etc.": 10474091
     "Company": 10474092
   skills: 10474105
@@ -29,6 +30,7 @@
     "Special Programme": 10474115
     "Time commitment": 10474114
     "Volunteering with group?": 10474093
+    "Record my hours?": 10474116
   availability: 10474117
   receive_emails: 10474097
   why_would_you_like_to_volunteer: 10474110
@@ -61,6 +63,7 @@
   zipcode: 10893154
   country: 10893155
   school_or_company:
+    "Are you a student?": 10893139
     "School, university, etc.": 10893140
     "Company": 10893141
   skills: 10893157
@@ -71,6 +74,7 @@
     "Special Programme": 10893167
     "Time commitment": 10893166
     "Volunteering with group?": 10893142
+    "Record my hours?": 10893168
   availability: 10893169
   receive_emails: 10893145
   why_would_you_like_to_volunteer: 10893162
@@ -103,6 +107,7 @@
   zipcode: 10893109
   country: 10893110
   school_or_company:
+    "Are you a student?": 10893094
     "School, university, etc.": 10893095
     "Company": 10893096
   skills: 10893112
@@ -113,6 +118,7 @@
     "Special Programme": 10893122
     "Time commitment": 10893121
     "Volunteering with group?": 10893097
+    "Record my hours?": 10893123
   availability: 10893124
   receive_emails: 10893100
   why_would_you_like_to_volunteer: 10893117

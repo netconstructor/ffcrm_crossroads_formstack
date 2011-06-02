@@ -90,6 +90,10 @@ class VolunteersFormstack
       # Build the field hash from the submission
       s = s.to_hash
 
+      %w(timestamp user_agent remote_addr data).each do |ignored|
+        s.delete(ignored)
+      end
+
       # Raise an exception if new fields have been added to the form.
       validate_no_new_fields(s, form_id)
 
@@ -171,7 +175,7 @@ class VolunteersFormstack
       end
     end
 
-    def process_new_submissions
+    def process_new_submissions(dryrun=false)
       # Process submissions from each form.
       if @sender = User.find_by_email("volunteer@crossroads.org.hk")
         settings["formstack"]["form_ids"].each do |form_id|
@@ -186,7 +190,7 @@ class VolunteersFormstack
                 submission_as_hash = submission_to_hash(submission, form_id)
                 # Log the submission for safe-keeping
                 log submission_as_hash.to_s
-                if process_formstack_submission(submission_as_hash)
+                if process_formstack_submission(submission_as_hash) and not dryrun
                   log "Deleting submission #{submission.id}..."
                   client.delete(submission.id)
                 end

@@ -90,10 +90,6 @@ class VolunteersFormstack
       # Build the field hash from the submission
       s = s.to_hash
 
-      %w(timestamp user_agent remote_addr data).each do |ignored|
-        s.delete(ignored)
-      end
-
       # Raise an exception if new fields have been added to the form.
       validate_no_new_fields(s, form_id)
 
@@ -166,11 +162,9 @@ class VolunteersFormstack
     # ----------------------------------------------------------------
     def validate_no_new_fields(s, form_id)
       all_ids = all_form_field_ids(form_id)
-      s = s.dup
-      s.delete("id")
-      new_fields = s.select{|id, v| !all_ids.include?(id) }
+      new_fields = s["data"].select{|h| !all_ids.include?(h.field.to_s) }
       unless new_fields.empty?
-        field_errors = new_fields.map{|k,v| "[#{k}: #{v}]"}.join(", ")
+        field_errors = new_fields.map{|h| "[#{h.field}: #{h.value}]"}.join(", ")
         raise FormstackFieldError, "The following fields have been added to form #{form_id} :: #{field_errors}"
       end
     end
@@ -190,14 +184,23 @@ class VolunteersFormstack
                 submission_as_hash = submission_to_hash(submission, form_id)
                 # Log the submission for safe-keeping
                 log submission_as_hash.to_s
-                if process_formstack_submission(submission_as_hash) and not dryrun
-                  log "Deleting submission #{submission.id}..."
-                  client.delete(submission.id)
+                if process_formstack_submission(submission_as_hash)
+                  if dryrun
+                    puts "NOT deleting submission."
+                    puts submission_as_hash
+                  else
+                    log "Deleting submission #{submission.id}..."
+                    client.delete(submission.id)
+                  end
                 end
               rescue Exception => ex
-                # Save submission errors so that bad records aren't processed continuously.
-                add_submission_error(submission.id)
-                HoptoadNotifier.notify(ex, :cgi_data => ENV)
+                if dryrun
+                  puts "Error! :: #{ex.message}"
+                else
+                  # Save submission errors so that bad records aren't processed continuously.
+                  add_submission_error(submission.id)
+                  HoptoadNotifier.notify(ex, :cgi_data => ENV)
+                end
               end
             end
           end

@@ -187,7 +187,7 @@ class VolunteersFormstack
 
                 # Save the resume to disk, and return filepath
                 submission_as_hash["formstack_email"]["formstack_submission"]["resume"] = \
-                  save_resume_to_disk(submission, form_id) #unless dryrun
+                  save_resume_to_disk(submission, form_id) unless dryrun
 
                 if process_formstack_submission(submission_as_hash, form_id)
                   if dryrun
@@ -380,7 +380,7 @@ class VolunteersFormstack
 
       file_ext = resume_url[/(\.[^.]+)$/, 1] || ""
       filename = "#{form_id}-#{s.id}#{file_ext}"
-      filepath = "public/formstack_resumes/#{filename}"
+      filepath = File.join(Rails.root, "public", "formstack_resumes", filename)
 
       puts "== Downloading resume to '#{filepath}'..."
 

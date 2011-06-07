@@ -23,5 +23,12 @@ describe VolunteersFormstack do
     }.should raise_error(FormstackFieldError, "Field is blank: Availability")
   end
 
+  it "should raise an error if an unhandled field is added to the form" do
+    data = {"data" => [Hashie::Mash.new(:field => "1234567", :value => "I'm a new field!")]}
+    lambda {
+      VolunteersFormstack.validate_no_new_fields(data, 1030950)
+    }.should raise_error(FormstackFieldError, "The following fields have been added to form 1030950 :: [1234567: I'm a new field!]")
+  end
+
 end
 

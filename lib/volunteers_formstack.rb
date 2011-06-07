@@ -184,7 +184,12 @@ class VolunteersFormstack
                 submission_as_hash = submission_to_hash(submission, form_id)
                 # Log the submission for safe-keeping
                 log submission_as_hash.to_s
-                if process_formstack_submission(submission_as_hash)
+
+                # Save the resume to disk, and return filepath
+                submission_as_hash["formstack_email"]["formstack_submission"]["resume"] = \
+                  save_resume_to_disk(submission, form_id) #unless dryrun
+
+                if process_formstack_submission(submission_as_hash, form_id)
                   if dryrun
                     puts "NOT deleting submission."
                     puts submission_as_hash
@@ -212,7 +217,7 @@ class VolunteersFormstack
 
     # Process Formstack XML email. Permissions not applicable.
     #--------------------------------------------------------------------------------------
-    def process_formstack_submission(data)
+    def process_formstack_submission(data, form_id)
       # Set User.current_user so that ActivityObserver works.
       User.current_user = @sender
 
@@ -221,8 +226,10 @@ class VolunteersFormstack
 
       # Check for a couple of fields that are most likely to fail.
       # Raise an exception (which notifies hoptoad) if they are blank.
-      if submission_params["availability"].blank?
-        raise FormstackFieldError, "Field is blank: Availability"
+      unless form_id.to_s == "1064470"  # Intern form has no availability field.
+        if submission_params["availability"].blank?
+          raise FormstackFieldError, "Field is blank: Availability"
+        end
       end
       if submission_params["languages_spoken"].blank?
         raise FormstackFieldError, "Field is blank: Languages Spoken"
@@ -362,6 +369,28 @@ class VolunteersFormstack
       else
         return string
       end
+    end
+
+    # Saves resume to ./public/formstack_resumes. Returns the filename
+    def save_resume_to_disk(s, form_id)
+      resume_url = s[field_id_from_name("resume", form_id)].to_s
+      return "" if resume_url.blank?
+      require 'net/http'
+      require 'uri'
+
+      file_ext = resume_url[/(\.[^.]+)$/, 1] || ""
+      filename = "#{form_id}-#{s.id}#{file_ext}"
+      filepath = "public/formstack_resumes/#{filename}"
+
+      puts "== Downloading resume to '#{filepath}'..."
+
+      url = URI.parse(resume_url)
+      Net::HTTP.start(url.host, url.port) do |http|
+        res = http.get(url.path)
+        open(filepath, "wb") {|f| f.write(res.body) }
+      end
+
+      return "https://crm.crossroads.org.hk/formstack_resumes/#{filename}"
     end
 
   end

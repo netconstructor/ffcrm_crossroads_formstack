@@ -116,7 +116,7 @@ class VolunteersFormstack
       data["formstack_email"]["contact"] = contact_params
 
       submission_params = {}
-      %w(skills resume interests receive_emails why_would_you_like_to_volunteer
+      %w(age skills resume interests receive_emails why_would_you_like_to_volunteer
          how_did_you_hear_about_crossroads).each do |field|
         submission_params[field] = s[field_id_from_name(field, form_id)].to_s
       end

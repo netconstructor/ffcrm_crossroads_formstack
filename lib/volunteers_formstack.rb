@@ -288,7 +288,7 @@ class VolunteersFormstack
       vol_tag.availability = parse_availability(submission_params["availability"])
       vol_tag.languages_spoken = parse_languages(submission_params["languages_spoken"])
 
-      %w(school_or_company skills resume interests volunteering_type
+      %w(age school_or_company skills resume interests volunteering_type
          why_would_you_like_to_volunteer how_did_you_hear_about_crossroads
          interested_in_doing other_information).each do |f|
             if vol_tag.respond_to?("#{f}=")

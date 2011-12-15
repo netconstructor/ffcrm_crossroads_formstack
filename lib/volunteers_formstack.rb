@@ -292,6 +292,8 @@ class VolunteersFormstack
          interested_in_doing other_information).each do |f|
           if contact.respond_to?("cf_#{f}=")
             contact.send("cf_#{f}=", (submission_params[f] || "").strip)
+          else
+            puts "!! Contact does not respond to method: cf_#{f}="
           end
       end
 
@@ -299,6 +301,8 @@ class VolunteersFormstack
       %w(availability languages_spoken email_subscriptions).each do |f|
           if contact.respond_to?("cf_#{f}=")
             contact.send("cf_#{f}=", submission_params[f] || [])
+          else
+            puts "!! Contact does not respond to method: cf_#{f}="
           end
       end
 

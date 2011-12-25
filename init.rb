@@ -5,6 +5,6 @@ FatFreeCRM::Plugin.register(:crm_crossroads_formstack, self) do
         author "Nathan Broadbent"
        version "1.0"
    description "Integrate Crossroads Formstack volunteer forms with FFCRM"
-  dependencies :crm_crossroads, :crm_super_tags
+  dependencies :crm_crossroads
 end
 

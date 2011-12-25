@@ -96,7 +96,7 @@ class VolunteersFormstack
       data = {"formstack_email" => {}}
 
       contact_params = {}
-      %w(name email phone mobile chinese_name salutation preferred_name).each do |field|
+      %w(name email phone mobile).each do |field|
         contact_params[field] = s[field_id_from_name(field, form_id)].to_s
       end
 
@@ -116,7 +116,7 @@ class VolunteersFormstack
       data["formstack_email"]["contact"] = contact_params
 
       submission_params = {}
-      %w(age skills resume interests receive_emails why_would_you_like_to_volunteer
+      %w(chinese_name salutation preferred_name age skills resume interests receive_emails why_would_you_like_to_volunteer
          how_did_you_hear_about_crossroads).each do |field|
         submission_params[field] = s[field_id_from_name(field, form_id)].to_s
       end
@@ -160,9 +160,9 @@ class VolunteersFormstack
 
     # Validation (Checks that no new fields have been added.)
     # ----------------------------------------------------------------
-    def validate_no_new_fields(s, form_id)
+    def validate_no_new_fields(sub, form_id)
       all_ids = all_form_field_ids(form_id)
-      new_fields = s["data"].select{|h| !all_ids.include?(h.field.to_s) }
+      new_fields = sub["data"].select{|h| !all_ids.include?(h.field.to_s) }
       unless new_fields.empty?
         field_errors = new_fields.map{|h| "[#{h.field}: #{h.value}]"}.join(", ")
         raise FormstackFieldError, "The following fields have been added to form #{form_id} :: #{field_errors}"
@@ -187,7 +187,7 @@ class VolunteersFormstack
 
                 # Save the resume to disk, and return filepath
                 submission_as_hash["formstack_email"]["formstack_submission"]["resume"] = \
-                  save_resume_to_disk(submission, form_id) unless dryrun
+                  save_resume_to_disk(submission, form_id)
 
                 if process_formstack_submission(submission_as_hash, form_id)
                   if dryrun
@@ -249,8 +249,6 @@ class VolunteersFormstack
         contact_params["tag_list"] << ", Intern"
       end
 
-      contact_params["email_subscriptions"] = ["Volunteer Email"] if !submission_params["receive_emails"].blank?
-
       # Set user and default access
       contact_params["user"] = @sender
       contact_params["access"] = FatFreeCRM::Dropbox.new.send(:default_access)
@@ -283,19 +281,32 @@ class VolunteersFormstack
 
       # Set 'Volunteer' customfield attributes to formstack_submission data
       # -------------------------------------------------------------------
-      vol_tag = contact.tag("Volunteer")
+      submission_params["availability"] = parse_availability(submission_params["availability"])
+      submission_params["languages_spoken"] = parse_languages(submission_params["languages_spoken"])
+      submission_params["email_subscriptions"] = ["Volunteer Email"] if submission_params["receive_emails"].present?
 
-      vol_tag.availability = parse_availability(submission_params["availability"])
-      vol_tag.languages_spoken = parse_languages(submission_params["languages_spoken"])
 
-      %w(age school_or_company skills resume interests volunteering_type
+      # Strings
+      %w(chinese_name salutation preferred_name age school_or_company skills resume interests volunteering_type
          why_would_you_like_to_volunteer how_did_you_hear_about_crossroads
          interested_in_doing other_information).each do |f|
-            if vol_tag.respond_to?("#{f}=")
-              vol_tag.send("#{f}=", (submission_params[f] || "").strip)
-            end
+          if contact.respond_to?("cf_#{f}=")
+            contact.send("cf_#{f}=", (submission_params[f] || "").strip)
+          else
+            puts "!! Contact does not respond to method: cf_#{f}="
+          end
       end
-      vol_tag.save!
+
+      # Arrays
+      %w(availability languages_spoken email_subscriptions).each do |f|
+          if contact.respond_to?("cf_#{f}=")
+            contact.send("cf_#{f}=", submission_params[f] || [])
+          else
+            puts "!! Contact does not respond to method: cf_#{f}="
+          end
+      end
+
+      contact.save!
 
       # Attach explanatory comments to both contacts if the email has
       # already been taken.
@@ -390,7 +401,7 @@ class VolunteersFormstack
         open(filepath, "wb") {|f| f.write(res.body) }
       end
 
-      return "https://crm.crossroads.org.hk/formstack_resumes/#{filename}"
+      return "#{Setting.host}/formstack_resumes/#{filename}"
     end
 
   end

@@ -65,7 +65,7 @@ module SampleFormstackSubmissions
           "how_did_you_hear_about_crossroads"=>"friend",
           "interested_in_doing"=>"Happy to try anything*\nTyping*\nPhotocopying, binding etc*\nMailroom*\nCooking*\nCleaning*\nLifting / carrying\nPacking help\nRenovation work\nGardening*\n",
           "school_or_company"=>"Are you a student?:  I am currently a student\nSchool, university, etc.:  Christian Alliance P.C. Lau Memorial International School\nCompany:  ",
-          "volunteering_type"=>"Special Programme:  silver certificate\nTime commitment:  programme\nVolunteering with group?:  Other: I am volunteering with my friends\nRecord my hours?:  ",
+          "volunteering_type"=>"Special Programme:  silver certificate\nTime commitment:  programme\nVolunteering with group?:  Other: I am volunteering with my friends",
           "other_information"=>"",
           "age"=>"30+"
         }
@@ -98,7 +98,6 @@ module SampleFormstackSubmissions
       "10893162"=>"會來幫忙",
       "10893163"=>"internet",
       "10893166"=>"occasionally",
-      "10893168"=>"Yes record my hours",
       "10893169"=>"星期二 = 全天\n星期三 = 全天\n星期四 = 上午\n星期五 = 上午\n星期六 = 下午",
       "10893171"=>"Happy to try anything*",
       "10893172"=>"Reception\nAccounting\nOnline research\nGrant writing\nHardware care/renovation"
@@ -133,7 +132,7 @@ module SampleFormstackSubmissions
           "how_did_you_hear_about_crossroads"=>"internet",
           "interested_in_doing"=>"Happy to try anything*\nReception\nAccounting\nOnline research\nGrant writing\nHardware care/renovation\n\n\n\n",
           "school_or_company"=>"Are you a student?:  I am currently employed\nSchool, university, etc.:  \nCompany:  僱用企業名稱",
-          "volunteering_type"=>"Special Programme:  \nTime commitment:  occasionally\nVolunteering with group?:  with my school\nRecord my hours?:  Yes record my hours",
+          "volunteering_type"=>"Special Programme:  \nTime commitment:  occasionally\nVolunteering with group?:  with my school",
           "other_information"=>"",
           "age"=>""
         }
@@ -169,7 +168,6 @@ module SampleFormstackSubmissions
       "10893117"=>"sadghasdhdafhadfh",
       "10893118"=>"internet\nfriend",
       "10893121"=>"occasionally",
-      "10893123"=>"Yes",
       "10893124"=>"星期二 = 不适合\n星期三 = 全天\n星期四 = 上午\n星期五 = 下午\n星期六 = 上午",
       "10893126"=>"Happy to try anything*\nHappy to try anything, but no heavy lifting*",
       "10893127"=>"Photocopying, binding etc*",
@@ -205,7 +203,7 @@ module SampleFormstackSubmissions
         "availability"=>"tuesday = not available\nwednesday = whole day\nthursday = morning\nfriday = afternoon\nsaturday = morning",
         "interested_in_doing"=>"Happy to try anything*\nHappy to try anything, but no heavy lifting*\nPhotocopying, binding etc*\n\nTruck driving\n\nOptometrist",
         "school_or_company"=>"Are you a student?:  I am currently employed\nSchool, university, etc.:  \nCompany:  sadgasdgsdag",
-        "volunteering_type"=>"Special Programme:  \nTime commitment:  occasionally\nVolunteering with group?:  with my company\nRecord my hours?:  Yes",
+        "volunteering_type"=>"Special Programme:  \nTime commitment:  occasionally\nVolunteering with group?:  with my company",
         "other_information"=>"",
         "age"=>""
       }

@@ -1,0 +1,13 @@
+development: &development
+  adapter: postgresql
+  database: fat_free_crm_development
+  username:
+  password:
+  host:     localhost
+  port:     5432
+  schema_search_path: public
+  min_messages: warning
+  
+test:
+  <<: *development
+  database: fat_free_crm_test

@@ -4,8 +4,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 include SampleFormstackSubmissions
 
+require 'fat_free_crm/crossroads_formstack/volunteers'
+include FatFreeCRM::CrossroadsFormstack
 
-describe VolunteersFormstack do
+describe Volunteers do
 
   def expand_hash(hash)
     field_array = hash[:submission].map do |field, value|
@@ -24,7 +26,7 @@ describe VolunteersFormstack do
      sample_volunteer_traditional_submission,
      sample_volunteer_simplified_submission,
      sample_volunteer_internship_submission].each do |submission_hash|
-        result = VolunteersFormstack.submission_to_hash(expand_hash(submission_hash),
+        result = Volunteers.submission_to_hash(expand_hash(submission_hash),
                                                         submission_hash[:form_id])
         result.should == submission_hash[:result]
     end
@@ -33,20 +35,20 @@ describe VolunteersFormstack do
   it "should raise an error if key fields are blank" do
     data = {"formstack_email" => {"contact" => {}, "formstack_submission" => {}}}
     lambda {
-      VolunteersFormstack.process_formstack_submission(data, 1030950)
-    }.should raise_error(FormstackFieldError, "Field is blank: Availability")
+      Volunteers.process_formstack_submission(data, 1030950)
+    }.should raise_error(FieldError, "Field is blank: Availability")
   end
 
   it "should raise an error if an unhandled field is added to the form" do
     data = {"data" => [Hashie::Mash.new(:field => "1234567", :value => "I'm a new field!")]}
     lambda {
-      VolunteersFormstack.validate_no_new_fields(data, 1030950)
-    }.should raise_error(FormstackFieldError, "The following fields have been added to form 1030950 :: [1234567: I'm a new field!]")
+      Volunteers.validate_no_new_fields(data, 1030950)
+    }.should raise_error(FieldError, "The following fields have been added to form 1030950 :: [1234567: I'm a new field!]")
   end
 
 
   it "should process a submission successfully" do
-    VolunteersFormstack.process_formstack_submission(sample_volunteer_submission[:result], 1030950)
+    Volunteers.process_formstack_submission(sample_volunteer_submission[:result], 1030950)
     c = Contact.find_by_email("etsetsedge@example.com")
     c.cf_how_did_you_hear_about_crossroads.should == "friend"
     c.cf_chinese_name.should == "麥道昕"

@@ -23,20 +23,11 @@ GIT
       uglifier
       will_paginate (~> 3.0.2)
 
-GIT
-  remote: git@bitbucket.org:crossroadsIT/ffcrm_crossroads.git
-  revision: c3d1c8ea90642d8760230e6a47eee68629c97d52
-  branch: gem
-  specs:
-    ffcrm_crossroads (1.0.1)
-      fat_free_crm
-
 PATH
   remote: .
   specs:
     ffcrm_crossroads_formstack (1.0.1)
       fat_free_crm
-      ffcrm_crossroads
       formstack
 
 GEM
@@ -238,7 +229,6 @@ DEPENDENCIES
   capybara
   combustion
   fat_free_crm!
-  ffcrm_crossroads!
   ffcrm_crossroads_formstack!
   formstack
   pg

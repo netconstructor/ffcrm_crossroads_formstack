@@ -7,7 +7,6 @@ gemspec
 
 gem 'fat_free_crm', :git => 'git://github.com/fatfreecrm/fat_free_crm.git', :branch => 'paper'
 gem 'formstack'
-gem 'ffcrm_crossroads', :git => 'git@bitbucket.org:crossroadsIT/ffcrm_crossroads.git', :branch => 'gem'
 
 gem 'pg'  # Default database for testing
 

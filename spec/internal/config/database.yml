@@ -1,13 +1,10 @@
-development: &development
+# Combustion always runs in test environment.
+test:
   adapter: postgresql
-  database: fat_free_crm_development
+  database: fat_free_crm_test
   username:
   password:
   host:     localhost
   port:     5432
   schema_search_path: public
   min_messages: warning
-  
-test:
-  <<: *development
-  database: fat_free_crm_test

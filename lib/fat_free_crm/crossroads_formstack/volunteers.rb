@@ -49,16 +49,19 @@ module FatFreeCRM
           end
         end
 
+        # Looks up a field by name, and returns it's ID
         def field_id_from_name(name, form_id)
           field_maps[form_id][name].to_s
         end
 
+        # Concatenates an Array of values into a formatted string
         def id_arr_to_s(id_array, submission)
           (id_array || []).map{|fid| submission[fid.to_s] }.join("\n")
         end
 
+        # Concatenates a Hash of key/value pairs into a formatted string
         def id_hash_to_s(id_hash, submission)
-          (id_hash || []).map{|label, fid| "#{label}:  #{submission[fid.to_s]}" }.join("\n")
+          (id_hash || {}).sort.map{|label, fid| "#{label}:  #{submission[fid.to_s]}" }.join("\n")
         end
 
         def translate_chinese(string)

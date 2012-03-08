@@ -64,7 +64,7 @@ module SampleFormstackSubmissions
           "why_would_you_like_to_volunteer"=>"To give back to the community.\r\nTo gain experience with volunteering outside of school.\r\nTo make people happy and enjoy life.",
           "how_did_you_hear_about_crossroads"=>"friend",
           "interested_in_doing"=>"Happy to try anything*\nTyping*\nPhotocopying, binding etc*\nMailroom*\nCooking*\nCleaning*\nLifting / carrying\nPacking help\nRenovation work\nGardening*\n",
-          "school_or_company"=>"Are you a student?:  I am currently a student\nSchool, university, etc.:  Christian Alliance P.C. Lau Memorial International School\nCompany:  ",
+          "school_or_company"=>"Are you a student?:  I am currently a student\nCompany:  \nSchool, university, etc.:  Christian Alliance P.C. Lau Memorial International School",
           "volunteering_type"=>"Special Programme:  silver certificate\nTime commitment:  programme\nVolunteering with group?:  Other: I am volunteering with my friends",
           "other_information"=>"",
           "age"=>"30+"
@@ -131,7 +131,7 @@ module SampleFormstackSubmissions
           "why_would_you_like_to_volunteer"=>"會來幫忙",
           "how_did_you_hear_about_crossroads"=>"internet",
           "interested_in_doing"=>"Happy to try anything*\nReception\nAccounting\nOnline research\nGrant writing\nHardware care/renovation\n\n\n\n",
-          "school_or_company"=>"Are you a student?:  I am currently employed\nSchool, university, etc.:  \nCompany:  僱用企業名稱",
+          "school_or_company"=>"Are you a student?:  I am currently employed\nCompany:  僱用企業名稱\nSchool, university, etc.:  ",
           "volunteering_type"=>"Special Programme:  \nTime commitment:  occasionally\nVolunteering with group?:  with my school",
           "other_information"=>"",
           "age"=>""
@@ -202,7 +202,7 @@ module SampleFormstackSubmissions
         "languages_spoken"=>"English = Basic\nCantonese = Fluent\nMandarin = Basic\nFrench = Fluent",
         "availability"=>"tuesday = not available\nwednesday = whole day\nthursday = morning\nfriday = afternoon\nsaturday = morning",
         "interested_in_doing"=>"Happy to try anything*\nHappy to try anything, but no heavy lifting*\nPhotocopying, binding etc*\n\nTruck driving\n\nOptometrist",
-        "school_or_company"=>"Are you a student?:  I am currently employed\nSchool, university, etc.:  \nCompany:  sadgasdgsdag",
+        "school_or_company"=>"Are you a student?:  I am currently employed\nCompany:  sadgasdgsdag\nSchool, university, etc.:  ",
         "volunteering_type"=>"Special Programme:  \nTime commitment:  occasionally\nVolunteering with group?:  with my company",
         "other_information"=>"",
         "age"=>""
@@ -266,7 +266,7 @@ module SampleFormstackSubmissions
         "availability"=>"", "interested_in_doing"=>"\nReception\nTyping\nBook-keeping\nTranslation\nHardware care/renovation\nWeb design\n\n\n\n",
         "school_or_company"=>"School:  asdgdsgag",
         "volunteering_type"=>"Internship",
-        "other_information"=>"Internship Period:  12 July - 20 August, 2011 (Second Intake)\nDietary requirements or physical conditions:  DIET REQUIREMENT",
+        "other_information"=>"Dietary requirements or physical conditions:  DIET REQUIREMENT\nInternship Period:  12 July - 20 August, 2011 (Second Intake)",
         "age"=>""
       }}
     }}

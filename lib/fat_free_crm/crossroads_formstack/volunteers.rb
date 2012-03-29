@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'formstack'
-require 'fat_free_crm/dropbox'
+require 'fat_free_crm/mail_processor/dropbox'
 
 module FatFreeCRM
   module CrossroadsFormstack
@@ -259,7 +259,8 @@ module FatFreeCRM
 
           # Set user and default access
           contact_params["user"] = @sender
-          contact_params["access"] = FatFreeCRM::Dropbox.new.send(:default_access)
+
+          contact_params["access"] = FatFreeCRM::MailProcessor::Dropbox.new.send(:default_access)
 
           # Create contact with blank email if email is already taken.
           contact_params["email"] = nil if existing_contact

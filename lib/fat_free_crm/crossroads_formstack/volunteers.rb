@@ -180,6 +180,8 @@ module FatFreeCRM
         def process_new_submissions(dryrun=false)
           # Process submissions from each form.
           if @sender = User.find_by_email("volunteer@crossroads.org.hk")
+            PaperTrail.whodunnit = @sender.id.to_s
+
             settings["formstack"]["form_ids"].each do |form_id|
               log "Fetching new submissions for form: #{form_id} ..."
               # Fetch submissions
@@ -226,9 +228,6 @@ module FatFreeCRM
         # Process Formstack XML email. Permissions not applicable.
         #--------------------------------------------------------------------------------------
         def process_formstack_submission(data, form_id)
-          # Set User.current_user so that ActivityObserver works.
-          User.current_user = @sender
-
           contact_params = data["formstack_email"]["contact"]
           submission_params = data["formstack_email"]["formstack_submission"]
 

@@ -1,25 +1,27 @@
 GIT
   remote: git://github.com/fatfreecrm/fat_free_crm.git
-  revision: 137a06fcab3e39cac1e22466e0e47ca3f6f3fc21
-  branch: paper
+  revision: 3ab81dba0cdb3b95ac64789a61b6be918def97e4
   specs:
-    fat_free_crm (0.2.0)
+    fat_free_crm (0.11.0)
       acts-as-taggable-on (~> 2.2.1)
       acts_as_commentable (~> 3.0.1)
       acts_as_list (~> 0.1.4)
       ajax-chosen-rails (>= 0.1.5)
       authlogic (~> 3.1.0)
+      cancan
       chosen-rails
+      dynamic_form
       ffaker (>= 1.12.0)
       haml (~> 3.1.3)
       jquery-rails
       paper_trail
-      paperclip (~> 2.5.2)
+      paperclip (~> 2.7.0)
       prototype-rails
       rails (~> 3.2.2)
       ransack
+      responds_to_parent
       sass (~> 3.1.15)
-      simple_form (~> 1.5.2)
+      simple_form (~> 2.0.1)
       uglifier
       will_paginate (~> 3.0.2)
 
@@ -74,6 +76,7 @@ GEM
       activerecord (>= 3.0.7)
       activerecord (>= 3.0.7)
     builder (3.0.0)
+    cancan (1.6.7)
     capybara (1.1.2)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -83,7 +86,7 @@ GEM
       xpath (~> 0.1.4)
     childprocess (0.3.1)
       ffi (~> 1.0.6)
-    chosen-rails (0.9.7.1)
+    chosen-rails (0.9.8)
       railties (~> 3.0)
       thor (~> 0.14)
     cocaine (0.2.1)
@@ -92,10 +95,11 @@ GEM
       rails (>= 3.0.0)
       thor (>= 0.14.6)
     diff-lcs (1.1.3)
+    dynamic_form (1.1.4)
     erubis (2.7.0)
     execjs (1.3.0)
       multi_json (~> 1.0)
-    ffaker (1.13.0)
+    ffaker (1.14.0)
     ffi (1.0.11)
     formstack (0.0.1)
       hashie (>= 0.1.3)
@@ -124,9 +128,10 @@ GEM
     multi_json (1.1.0)
     multi_xml (0.4.1)
     nokogiri (1.5.0)
-    paper_trail (2.6.0)
-      rails (~> 3)
-    paperclip (2.5.2)
+    paper_trail (2.6.3)
+      activerecord (~> 3.0)
+      railties (~> 3.0)
+    paperclip (2.7.0)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
@@ -167,6 +172,7 @@ GEM
     rbx-require-relative (0.0.9)
     rdoc (3.12)
       json (~> 1.4)
+    responds_to_parent (1.0.20091013)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
       rspec-expectations (~> 2.8.0)
@@ -202,7 +208,7 @@ GEM
       ffi (~> 1.0)
       multi_json (~> 1.0)
       rubyzip
-    simple_form (1.5.2)
+    simple_form (2.0.1)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
     sprockets (2.1.2)
@@ -215,7 +221,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.32)
-    uglifier (1.2.3)
+    uglifier (1.2.4)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
     will_paginate (3.0.3)

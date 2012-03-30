@@ -5,7 +5,7 @@ Bundler.development_gems = ['fat_free_crm', /^ffcrm_/]
 
 gemspec
 
-gem 'fat_free_crm', :git => 'git://github.com/fatfreecrm/fat_free_crm.git', :branch => 'paper'
+gem 'fat_free_crm', :git => 'git://github.com/fatfreecrm/fat_free_crm.git'
 gem 'formstack'
 
 gem 'pg'  # Default database for testing

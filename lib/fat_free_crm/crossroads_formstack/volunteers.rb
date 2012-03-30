@@ -177,7 +177,7 @@ module FatFreeCRM
           end
         end
 
-        def process_new_submissions(dryrun=false)
+        def process_new_submissions(dry_run = false)
           # Process submissions from each form.
           if @sender = User.find_by_email("volunteer@crossroads.org.hk")
             PaperTrail.whodunnit = @sender.id.to_s
@@ -200,7 +200,7 @@ module FatFreeCRM
                       save_resume_to_disk(submission, form_id)
 
                     if process_formstack_submission(submission_as_hash, form_id)
-                      if dryrun
+                      if dry_run
                         puts "NOT deleting submission."
                         puts submission_as_hash
                       else
@@ -209,7 +209,7 @@ module FatFreeCRM
                       end
                     end
                   rescue Exception => ex
-                    if dryrun
+                    if dry_run
                       puts "Error! :: #{ex.message}"
                     else
                       # Save submission errors so that bad records aren't processed continuously.

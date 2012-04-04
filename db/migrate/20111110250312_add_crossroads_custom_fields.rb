@@ -4,7 +4,7 @@ class AddCrossroadsCustomFields < ActiveRecord::Migration
     add_column(:contacts, column_name, type) unless column_exists?(:contacts, column_name)
   end
 
-  def self.change
+  def change
     add_column_unless_exists "cf_chinese_name", :string
     add_column_unless_exists "cf_preferred_name", :string
     add_column_unless_exists "cf_salutation", :string

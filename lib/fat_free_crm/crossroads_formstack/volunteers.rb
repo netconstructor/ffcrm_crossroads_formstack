@@ -293,7 +293,6 @@ module FatFreeCRM
           submission_params["languages_spoken"] = parse_languages(submission_params["languages_spoken"])
           submission_params["email_subscriptions"] = ["Volunteer Email"] if submission_params["receive_emails"].present?
 
-
           # Strings
           %w(chinese_name salutation preferred_name age school_or_company skills resume interests volunteering_type
              why_would_you_like_to_volunteer how_did_you_hear_about_crossroads
@@ -409,7 +408,7 @@ module FatFreeCRM
             open(filepath, "wb") {|f| f.write(res.body) }
           end
 
-          return "#{Setting.host}/formstack_resumes/#{filename}"
+          return "https://#{Setting.host}/formstack_resumes/#{filename}"
         end
 
       end

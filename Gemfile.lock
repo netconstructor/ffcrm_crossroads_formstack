@@ -1,7 +1,6 @@
 GIT
   remote: git://github.com/fatfreecrm/fat_free_crm.git
-  revision: 1b245aefc3d82d60c6afcb5c1b2d65d691b7e35e
-  branch: notifications
+  revision: 578f3e9d24ac0e2243596defaf53beaaac07ca2a
   specs:
     fat_free_crm (0.11.1)
       acts-as-taggable-on (~> 2.2.1)
@@ -18,7 +17,7 @@ GIT
       jquery-rails
       nokogiri
       paper_trail
-      paperclip (~> 2.7.0)
+      paperclip (= 3.0.1)
       premailer
       prototype-rails
       rails (~> 3.2.2)
@@ -26,6 +25,7 @@ GIT
       responds_to_parent
       sass (~> 3.1.10)
       simple_form (~> 2.0.1)
+      squeel (~> 0.9.3)
       will_paginate (~> 3.0.2)
 
 PATH
@@ -68,13 +68,12 @@ GEM
     acts-as-taggable-on (2.2.2)
       rails (~> 3.0)
     acts_as_commentable (3.0.1)
-    acts_as_list (0.1.5)
+    acts_as_list (0.1.6)
     addressable (2.2.7)
     ajax-chosen-rails (0.1.5)
       chosen-rails
       railties (~> 3.0)
       thor (~> 0.14)
-    archive-tar-minitar (0.5.2)
     arel (3.0.2)
     authlogic (3.1.0)
       activerecord (>= 3.0.7)
@@ -101,6 +100,13 @@ GEM
     css_parser (1.2.6)
       addressable
       rdoc
+    debugger (1.0.0)
+      columnize (>= 0.3.1)
+      debugger-linecache
+      debugger-ruby_core_source
+    debugger-linecache (1.0.1)
+      debugger-ruby_core_source
+    debugger-ruby_core_source (1.0.1)
     diff-lcs (1.1.3)
     dynamic_form (1.1.4)
     email_reply_parser (0.5.0)
@@ -125,8 +131,6 @@ GEM
     json (1.6.6)
     linecache (0.46)
       rbx-require-relative (> 0.0.4)
-    linecache19 (0.5.12)
-      ruby_core_source (>= 0.1.4)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -138,9 +142,10 @@ GEM
     paper_trail (2.6.3)
       activerecord (~> 3.0)
       railties (~> 3.0)
-    paperclip (2.7.0)
-      activerecord (>= 2.3.0)
-      activesupport (>= 2.3.2)
+    paperclip (3.0.1)
+      activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
       cocaine (>= 0.0.2)
       mime-types
     pg (0.13.2)
@@ -201,18 +206,8 @@ GEM
       ruby-debug-base (~> 0.10.4.0)
     ruby-debug-base (0.10.4)
       linecache (>= 0.3)
-    ruby-debug-base19 (0.11.25)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby_core_source (>= 0.1.4)
-    ruby-debug19 (0.11.6)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby-debug-base19 (>= 0.11.19)
-    ruby_core_source (0.1.5)
-      archive-tar-minitar (>= 0.5.2)
     rubyzip (0.9.6.1)
-    sass (3.1.15)
+    sass (3.1.16)
     selenium-webdriver (2.20.0)
       childprocess (>= 0.2.5)
       ffi (~> 1.0)
@@ -225,6 +220,10 @@ GEM
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    squeel (0.9.5)
+      activerecord (~> 3.0)
+      activesupport (~> 3.0)
+      polyamorous (~> 0.5.0)
     thor (0.14.6)
     tilt (1.3.3)
     treetop (1.4.10)
@@ -241,6 +240,7 @@ PLATFORMS
 DEPENDENCIES
   capybara
   combustion
+  debugger
   fat_free_crm!
   ffcrm_crossroads_formstack!
   formstack
@@ -248,4 +248,3 @@ DEPENDENCIES
   rspec
   rspec-rails (~> 2.6)
   ruby-debug
-  ruby-debug19
